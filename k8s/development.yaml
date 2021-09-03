@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blog-admin
+  name: blog-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-admin
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: blog-admin
+    spec:
+      containers:
+        - image: naohirokurasawa/blog-admin
+          name: blog-admin
+          ports:
+            - containerPort: 3000
+          resources: {}
