@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { SidebarWithHeader } from "../components/side-with-header";
+import { SidebarWithHeader } from "../components/sidebar-with-header";
 
 const Home: NextPage = () => {
   return (

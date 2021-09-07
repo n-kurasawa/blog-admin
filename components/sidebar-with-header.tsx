@@ -1,23 +1,13 @@
 import {
-  IconButton,
-  Avatar,
   Box,
-  CloseButton,
   Flex,
   HStack,
-  VStack,
   Icon,
-  useColorModeValue,
   Link,
-  Drawer,
-  DrawerContent,
   Text,
-  useDisclosure,
-  BoxProps,
   FlexProps,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
@@ -27,8 +17,6 @@ import {
   FiCompass,
   FiStar,
   FiSettings,
-  FiMenu,
-  FiBell,
   FiChevronDown,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
@@ -47,56 +35,31 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 export const SidebarWithHeader: React.FC = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      <SidebarContent
-        onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
-      />
-      <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full"
-      >
-        <DrawerContent>
-          <SidebarContent onClose={onClose} />
-        </DrawerContent>
-      </Drawer>
-      {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+    <Box minH="100vh" bg={"gray.100"}>
+      <SidebarContent />
+      <Nav />
+      <Box ml={60} p="4">
         {children}
       </Box>
     </Box>
   );
 };
 
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
-}
-
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = () => {
   return (
     <Box
-      transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={"white"}
       borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
+      borderRightColor={"gray.200"}
+      w={60}
       pos="fixed"
       h="full"
-      {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+          Blog Admin
         </Text>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon}>
@@ -143,40 +106,19 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
   );
 };
 
-interface MobileProps extends FlexProps {
-  onOpen: () => void;
-}
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+const Nav = () => {
   return (
     <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 4 }}
+      ml={60}
+      px={4}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={"white"}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-      justifyContent={{ base: "space-between", md: "flex-end" }}
-      {...rest}
+      borderBottomColor={"gray.200"}
+      justifyContent={"flex-end"}
     >
-      <IconButton
-        display={{ base: "flex", md: "none" }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
-
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
-
-      <HStack spacing={{ base: "0", md: "6" }}>
+      <HStack spacing={"6"}>
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -185,20 +127,15 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                <Box display={{ base: "none", md: "flex" }}>
+                <Box display={"flex"}>
                   <FiChevronDown />
                 </Box>
               </HStack>
             </MenuButton>
-            <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
+            <MenuList bg={"white"} borderColor={"gray.200"}>
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
