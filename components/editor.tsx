@@ -1,23 +1,50 @@
 import { Box } from "@chakra-ui/react";
-import { FormEventHandler, useRef, useState } from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
+import markdownToHtml from "../lib/markdownToHtml";
 
 export const Editor: React.FC = () => {
-  const [text, setText] = useState("");
-  const defalutValue = useRef(text);
+  const [markdown, setMd] = useState("");
+  const textCapture = useRef("");
+  const htmlCapture = useRef("");
+  useEffect(() => {
+    async function mToH() {
+      const md = await markdownToHtml(textCapture.current);
+      setMd(md);
+    }
+    const func = setInterval(() => {
+      mToH();
+    }, 1000);
+    return () => {
+      clearInterval(func);
+    };
+  }, []);
   const handleInput: FormEventHandler = (e) => {
-    setText((e.currentTarget as HTMLElement).innerHTML);
+    textCapture.current = (e.currentTarget as HTMLElement).innerText;
+    htmlCapture.current = (e.currentTarget as HTMLElement).innerHTML;
   };
+
   return (
     <>
       <Box
         bg={"white"}
-        minH={"100vh"}
-        padding={4}
+        // minH={"100vh"}
+        padding={8}
+        mb={8}
         _focus={{ outline: "none" }}
         contentEditable={true}
         onInput={handleInput}
         dangerouslySetInnerHTML={{
-          __html: defalutValue.current,
+          __html: htmlCapture.current,
+        }}
+      />
+      <Box
+        bg={"white"}
+        // minH={"100vh"}
+        padding={8}
+        _focus={{ outline: "none" }}
+        contentEditable={true}
+        dangerouslySetInnerHTML={{
+          __html: markdown,
         }}
       />
     </>
