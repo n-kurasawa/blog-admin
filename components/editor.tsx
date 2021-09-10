@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import markdownToHtml from "../lib/markdownToHtml";
+import markdownStyles from "../styles/markdown-styles.module.css";
 
 export const Editor: React.FC = () => {
   const [markdown, setMd] = useState("");
@@ -37,11 +38,8 @@ export const Editor: React.FC = () => {
           __html: htmlCapture.current,
         }}
       />
-      <Box
-        bg={"white"}
-        // minH={"100vh"}
-        padding={8}
-        _focus={{ outline: "none" }}
+      <div
+        className={markdownStyles["markdown"]}
         contentEditable={true}
         dangerouslySetInnerHTML={{
           __html: markdown,
