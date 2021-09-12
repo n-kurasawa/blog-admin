@@ -3,8 +3,18 @@ import Head from "next/head";
 import { SidebarWithHeader } from "../components/sidebar-with-header";
 import { Box } from "@chakra-ui/react";
 import { Editor } from "../components/editor";
+import { sdk } from "../lib/graphql-client";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    async function getSlugs() {
+      const slugs = await sdk.slugs();
+      console.log(slugs);
+    }
+    getSlugs();
+  }, []);
+
   return (
     <Box>
       <Head>
