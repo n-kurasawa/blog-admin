@@ -2,7 +2,6 @@ import {
   Box,
   Flex,
   HStack,
-  Icon,
   Link,
   Text,
   FlexProps,
@@ -11,33 +10,16 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiChevronDown,
-} from "react-icons/fi";
-import { IconType } from "react-icons";
+import { FiChevronDown } from "react-icons/fi";
 import { ReactText } from "react";
 
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-}
-const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
-];
-
-export const SidebarWithHeader: React.FC = ({ children }) => {
+type Props = {
+  slugs: string[];
+};
+export const SidebarWithHeader: React.FC<Props> = ({ slugs, children }) => {
   return (
     <Box minH="100vh" bg={"gray.100"}>
-      <SidebarContent />
+      <SidebarContent slugs={slugs} />
       <Nav />
       <Box ml={60} p="4">
         {children}
@@ -46,7 +28,7 @@ export const SidebarWithHeader: React.FC = ({ children }) => {
   );
 };
 
-const SidebarContent = () => {
+const SidebarContent: React.FC<Props> = ({ slugs }) => {
   return (
     <Box
       bg={"white"}
@@ -61,20 +43,14 @@ const SidebarContent = () => {
           Blog Admin
         </Text>
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
+      {slugs.map((slug) => (
+        <NavItem key={slug}>{slug}</NavItem>
       ))}
     </Box>
   );
 };
 
-interface NavItemProps extends FlexProps {
-  icon: IconType;
-  children: ReactText;
-}
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem: React.FC = ({ children }) => {
   return (
     <Link href="#" style={{ textDecoration: "none" }}>
       <Flex
@@ -88,18 +64,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
           bg: "cyan.400",
           color: "white",
         }}
-        {...rest}
       >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
-          />
-        )}
         {children}
       </Flex>
     </Link>
