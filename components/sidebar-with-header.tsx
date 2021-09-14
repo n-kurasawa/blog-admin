@@ -4,14 +4,13 @@ import {
   HStack,
   Link,
   Text,
-  FlexProps,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
 import { FiChevronDown } from "react-icons/fi";
-import { ReactText } from "react";
+import NextLink from "next/link";
 
 type Props = {
   slugs: string[];
@@ -44,29 +43,31 @@ const SidebarContent: React.FC<Props> = ({ slugs }) => {
         </Text>
       </Flex>
       {slugs.map((slug) => (
-        <NavItem key={slug}>{slug}</NavItem>
+        <NavItem key={slug} slug={slug} />
       ))}
     </Box>
   );
 };
 
-const NavItem: React.FC = ({ children }) => {
+const NavItem: React.FC<{ slug: string }> = ({ slug }) => {
   return (
     <Link href="#" style={{ textDecoration: "none" }}>
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: "cyan.400",
-          color: "white",
-        }}
-      >
-        {children}
-      </Flex>
+      <NextLink href={`/posts/${slug}`}>
+        <Flex
+          align="center"
+          p="4"
+          mx="4"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          _hover={{
+            bg: "cyan.400",
+            color: "white",
+          }}
+        >
+          {slug}
+        </Flex>
+      </NextLink>
     </Link>
   );
 };
