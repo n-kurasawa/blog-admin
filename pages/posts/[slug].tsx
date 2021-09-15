@@ -4,7 +4,7 @@ import { Editor } from "../../components/editor";
 import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
-import { usePostQuery } from "../../lib/generated/graphql";
+import { usePostQuery, useSlugsQuery } from "../../lib/generated/graphql";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -13,10 +13,18 @@ const Post: NextPage = () => {
   if (typeof slug === "string") {
     queryValue = slug;
   }
-  const { data } = usePostQuery({ variables: { slug: queryValue } });
+  const slugsQuery = useSlugsQuery();
+  let slugs: string[] = [];
+  if (slugsQuery.data?.posts) {
+    slugs = slugsQuery.data?.posts.map((post) => {
+      return post.slug;
+    });
+  }
+
+  const postQuery = usePostQuery({ variables: { slug: queryValue } });
   let content = "";
-  if (data?.post?.content.body) {
-    content = data.post.content.body;
+  if (postQuery.data?.post?.content.body) {
+    content = postQuery.data.post.content.body;
   }
 
   return (
@@ -24,7 +32,7 @@ const Post: NextPage = () => {
       <Head>
         <title>Blog Admin</title>
       </Head>
-      <SidebarWithHeader slugs={[]}>
+      <SidebarWithHeader slugs={slugs}>
         <Editor content={content} />
       </SidebarWithHeader>
     </Box>
