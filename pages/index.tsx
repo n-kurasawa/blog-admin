@@ -3,23 +3,16 @@ import Head from "next/head";
 import { SidebarWithHeader } from "../components/sidebar-with-header";
 import { Box } from "@chakra-ui/react";
 import { Editor } from "../components/editor";
-import { sdk } from "../lib/graphql-client";
-import { useEffect, useState } from "react";
+import { useSlugsQuery } from "../lib/generated/graphql";
 
 const Home: NextPage = () => {
-  const [slugs, setSlugs] = useState([] as string[]);
-  useEffect(() => {
-    async function getSlugs() {
-      const slugsQuery = await sdk.slugs();
-      const sls = slugsQuery.posts.map((post) => {
-        return post.slug;
-      });
-      setSlugs(sls);
-    }
-    getSlugs().catch((error) => {
-      console.error(error);
+  const { data } = useSlugsQuery();
+  let slugs: string[] = [];
+  if (data) {
+    slugs = data.posts.map((post) => {
+      return post.slug;
     });
-  }, []);
+  }
 
   return (
     <Box>
