@@ -1,19 +1,33 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-
-const client = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_API_URL,
-  cache: new InMemoryCache(),
-});
+import { ApolloProvider } from "@apollo/client";
+import { SidebarWithHeader } from "../components/sidebar-with-header";
+import { useSlugsQuery } from "../lib/generated/graphql";
+import Head from "next/head";
+import { gqlClient } from "../lib/graphql-client";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const slugsQuery = useSlugsQuery({ client: gqlClient });
+  let slugs: string[] = [];
+  if (slugsQuery.data?.posts) {
+    slugs = slugsQuery.data?.posts.map((post) => {
+      return post.slug;
+    });
+  }
+
   return (
-    <ChakraProvider>
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
-      </ApolloProvider>
-    </ChakraProvider>
+    <>
+      <Head>
+        <title>Blog Admin</title>
+      </Head>
+      <ChakraProvider>
+        <ApolloProvider client={gqlClient}>
+          <SidebarWithHeader slugs={slugs}>
+            <Component {...pageProps} />
+          </SidebarWithHeader>
+        </ApolloProvider>
+      </ChakraProvider>
+    </>
   );
 }
 export default MyApp;
