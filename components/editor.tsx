@@ -5,5 +5,5 @@ type Props = {
 };
 
 export const Editor: React.FC<Props> = ({ content }) => {
-  return <Textarea bg={"white"} minH="100vh" defaultValue={content} />;
+  return <Textarea bg={"white"} minH="600px" defaultValue={content} />;
 };
