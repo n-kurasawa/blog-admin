@@ -16,3 +16,15 @@ query slugs {
     slug
   }
 }
+
+mutation createPost(
+    $slug: String!
+    $title: String!
+    $coverImage: String!
+    $content: String!
+    $description: String!
+) {
+    createPost(input: {slug: $slug, title: $title, coverImage: $coverImage, content: $content, description: $description}) {
+        id
+    }
+}
