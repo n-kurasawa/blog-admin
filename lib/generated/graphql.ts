@@ -20,9 +20,20 @@ export type Content = {
   id: Scalars['ID'];
 };
 
+export type EditPost = {
+  content: Scalars['String'];
+  coverImage: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  publishedAt: Scalars['String'];
+  slug: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createPost: Post;
+  updatePost: Post;
 };
 
 
@@ -30,10 +41,16 @@ export type MutationCreatePostArgs = {
   input: NewPost;
 };
 
+
+export type MutationUpdatePostArgs = {
+  input: EditPost;
+};
+
 export type NewPost = {
   content: Scalars['String'];
   coverImage: Scalars['String'];
   description: Scalars['String'];
+  publishedAt: Scalars['String'];
   slug: Scalars['String'];
   title: Scalars['String'];
 };
@@ -42,9 +59,9 @@ export type Post = {
   __typename?: 'Post';
   content: Content;
   coverImage: Scalars['String'];
-  date: Scalars['String'];
   description: Scalars['String'];
   id: Scalars['ID'];
+  publishedAt: Scalars['String'];
   slug: Scalars['String'];
   title: Scalars['String'];
 };
@@ -65,7 +82,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', title: string, date: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } }> };
+export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } }> };
 
 export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -78,20 +95,35 @@ export type CreatePostMutationVariables = Exact<{
   coverImage: Scalars['String'];
   content: Scalars['String'];
   description: Scalars['String'];
+  publishedAt: Scalars['String'];
 }>;
 
 
 export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: string } };
 
+export type UpdatePostMutationVariables = Exact<{
+  id: Scalars['ID'];
+  slug: Scalars['String'];
+  title: Scalars['String'];
+  coverImage: Scalars['String'];
+  content: Scalars['String'];
+  description: Scalars['String'];
+  publishedAt: Scalars['String'];
+}>;
+
+
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', id: string } };
+
 
 export const PostDocument = gql`
     query post($slug: String!) {
   post(slug: $slug) {
+    id
     content {
       body
     }
     title
-    date
+    publishedAt
     slug
     coverImage
     description
@@ -161,9 +193,9 @@ export type SlugsQueryHookResult = ReturnType<typeof useSlugsQuery>;
 export type SlugsLazyQueryHookResult = ReturnType<typeof useSlugsLazyQuery>;
 export type SlugsQueryResult = Apollo.QueryResult<SlugsQuery, SlugsQueryVariables>;
 export const CreatePostDocument = gql`
-    mutation createPost($slug: String!, $title: String!, $coverImage: String!, $content: String!, $description: String!) {
+    mutation createPost($slug: String!, $title: String!, $coverImage: String!, $content: String!, $description: String!, $publishedAt: String!) {
   createPost(
-    input: {slug: $slug, title: $title, coverImage: $coverImage, content: $content, description: $description}
+    input: {slug: $slug, title: $title, coverImage: $coverImage, content: $content, description: $description, publishedAt: $publishedAt}
   ) {
     id
   }
@@ -189,6 +221,7 @@ export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, C
  *      coverImage: // value for 'coverImage'
  *      content: // value for 'content'
  *      description: // value for 'description'
+ *      publishedAt: // value for 'publishedAt'
  *   },
  * });
  */
@@ -199,3 +232,44 @@ export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
+export const UpdatePostDocument = gql`
+    mutation updatePost($id: ID!, $slug: String!, $title: String!, $coverImage: String!, $content: String!, $description: String!, $publishedAt: String!) {
+  updatePost(
+    input: {id: $id, slug: $slug, title: $title, coverImage: $coverImage, content: $content, description: $description, publishedAt: $publishedAt}
+  ) {
+    id
+  }
+}
+    `;
+export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
+
+/**
+ * __useUpdatePostMutation__
+ *
+ * To run a mutation, you first call `useUpdatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePostMutation, { data, loading, error }] = useUpdatePostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      slug: // value for 'slug'
+ *      title: // value for 'title'
+ *      coverImage: // value for 'coverImage'
+ *      content: // value for 'content'
+ *      description: // value for 'description'
+ *      publishedAt: // value for 'publishedAt'
+ *   },
+ * });
+ */
+export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePostMutation, UpdatePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument, options);
+      }
+export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
+export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
+export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;

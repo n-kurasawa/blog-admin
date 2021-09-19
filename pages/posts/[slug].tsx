@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import {
-  useCreatePostMutation,
   usePostQuery,
+  useUpdatePostMutation,
 } from "../../lib/generated/graphql";
 import {
   Box,
@@ -23,8 +23,9 @@ const Post: NextPage = () => {
   }
 
   const defaultValue = {
+    id: "",
     title: "",
-    date: "",
+    publishedAt: "",
     slug: "",
     coverImage: "",
     description: "",
@@ -36,27 +37,30 @@ const Post: NextPage = () => {
   let post = defaultValue;
   if (data?.post) {
     const tmp = data?.post;
+    post.id = tmp.id;
     post.title = tmp.title;
-    post.date = tmp.date;
+    post.publishedAt = tmp.publishedAt;
     post.slug = tmp.slug;
     post.coverImage = tmp.coverImage;
     post.description = tmp.description;
     post.content = tmp.content.body;
   }
-  const [createPostMutation] = useCreatePostMutation();
+  const [updatePostMutation] = useUpdatePostMutation();
 
   if (loading || error) {
     return null;
   }
 
   const handleSubmit = async (post: Post) => {
-    const res = await createPostMutation({
+    const res = await updatePostMutation({
       variables: {
+        id: post.id,
         slug: post.slug,
         title: post.title,
         coverImage: post.coverImage,
         content: post.content,
         description: post.description,
+        publishedAt: post.publishedAt,
       },
     });
     if (res.errors) {
@@ -74,12 +78,13 @@ const Post: NextPage = () => {
 export default Post;
 
 type Post = {
+  id: string;
   title: string;
   slug: string;
-  date: string;
   content: string;
   coverImage: string;
   description: string;
+  publishedAt: string;
 };
 
 type Props = {
@@ -88,15 +93,15 @@ type Props = {
 };
 const PostForm: React.FC<Props> = ({ defaultPost, onSubmit }) => {
   const [post, setPost] = useState(defaultPost);
-  const { title, date, slug, content, description, coverImage } = post;
+  const { title, publishedAt, slug, content, description, coverImage } = post;
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPost((prev) => {
       return { ...prev, title: e.target.value };
     });
   };
-  const handleDateChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handlePublishedAtChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPost((prev) => {
-      return { ...prev, date: e.target.value };
+      return { ...prev, publishedAt: e.target.value };
     });
   };
   const handleSlugChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -120,7 +125,6 @@ const PostForm: React.FC<Props> = ({ defaultPost, onSubmit }) => {
     });
   };
   const handleSubmit: FormEventHandler = (e) => {
-    console.log("submit");
     e.preventDefault();
     onSubmit(post);
   };
@@ -131,12 +135,12 @@ const PostForm: React.FC<Props> = ({ defaultPost, onSubmit }) => {
           <FormLabel>Title</FormLabel>
           <Input type="text" value={title} onChange={handleTitleChange} />
         </FormControl>
-        <FormControl id="date">
-          <FormLabel>Date</FormLabel>
+        <FormControl id="publishedAt">
+          <FormLabel>Published At</FormLabel>
           <Input
             type="date"
-            value={date.split("T")[0]}
-            onChange={handleDateChange}
+            value={publishedAt}
+            onChange={handlePublishedAtChange}
           />
         </FormControl>
         <FormControl id="slug">
