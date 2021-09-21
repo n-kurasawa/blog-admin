@@ -18,7 +18,9 @@ const Post: NextPage = () => {
   const { data, loading, error } = usePostQuery({
     variables: { slug: queryValue },
   });
-  const [updatePostMutation] = useUpdatePostMutation();
+  const [updatePostMutation] = useUpdatePostMutation({
+    refetchQueries: ["slugs"],
+  });
 
   if (loading || error || !data?.post) {
     return null;

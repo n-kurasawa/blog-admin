@@ -17,7 +17,9 @@ const Home: NextPage = () => {
     content: { body: "" },
   };
 
-  const [createPostMutation] = useCreatePostMutation();
+  const [createPostMutation] = useCreatePostMutation({
+    refetchQueries: ["slugs"],
+  });
   const handleSubmit = async (post: PostType) => {
     const res = await createPostMutation({
       variables: {
