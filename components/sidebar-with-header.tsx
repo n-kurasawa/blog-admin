@@ -38,9 +38,13 @@ const SidebarContent: React.FC<Props> = ({ slugs }) => {
       h="full"
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Blog Admin
-        </Text>
+        <Link href="#" style={{ textDecoration: "none" }}>
+          <NextLink href={"/"}>
+            <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+              Blog Admin
+            </Text>
+          </NextLink>
+        </Link>
       </Flex>
       {slugs.map((slug) => (
         <NavItem key={slug} slug={slug} />
