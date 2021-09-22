@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
-import { PostForm } from "../components/post-form";
-import { Box } from "@chakra-ui/react";
 import { PostType } from "../types/blog";
 import { useCreatePostMutation } from "../lib/generated/graphql";
 import { useRouter } from "next/router";
+import { Editor } from "../components/editor";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -37,11 +36,7 @@ const Home: NextPage = () => {
     router.push(`/posts/${post.slug}`);
   };
 
-  return (
-    <Box bg={"white"} p={4}>
-      <PostForm initialPost={initialPost} onSubmit={handleSubmit} />
-    </Box>
-  );
+  return <Editor initialPost={initialPost} onSubmit={handleSubmit} />;
 };
 
 export default Home;
