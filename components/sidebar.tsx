@@ -1,28 +1,14 @@
-import {
-  Box,
-  Flex,
-  HStack,
-  Link,
-  Text,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-} from "@chakra-ui/react";
-import { FiChevronDown } from "react-icons/fi";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 type Props = {
   slugs: string[];
 };
-export const SidebarWithHeader: React.FC<Props> = ({ slugs, children }) => {
+export const Sidebar: React.FC<Props> = ({ slugs, children }) => {
   return (
-    <Box minH="100vh" bg={"gray.100"}>
+    <Box minH="100vh">
       <SidebarContent slugs={slugs} />
-      <Nav />
-      <Box ml={60} p="4">
-        {children}
-      </Box>
+      <Box ml={60}>{children}</Box>
     </Box>
   );
 };
@@ -73,43 +59,5 @@ const NavItem: React.FC<{ slug: string }> = ({ slug }) => {
         </Flex>
       </NextLink>
     </Link>
-  );
-};
-
-const Nav = () => {
-  return (
-    <Flex
-      ml={60}
-      px={4}
-      height="20"
-      alignItems="center"
-      bg={"white"}
-      borderBottomWidth="1px"
-      borderBottomColor={"gray.200"}
-      justifyContent={"flex-end"}
-    >
-      <HStack spacing={"6"}>
-        <Flex alignItems={"center"}>
-          <Menu>
-            <MenuButton
-              py={2}
-              transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
-              <HStack>
-                <Box display={"flex"}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList bg={"white"} borderColor={"gray.200"}>
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
-      </HStack>
-    </Flex>
   );
 };

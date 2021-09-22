@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ApolloProvider } from "@apollo/client";
-import { SidebarWithHeader } from "../components/sidebar-with-header";
+import { Sidebar } from "../components/sidebar";
 import { useSlugsQuery } from "../lib/generated/graphql";
 import Head from "next/head";
 import { gqlClient } from "../lib/graphql-client";
@@ -22,9 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider>
         <ApolloProvider client={gqlClient}>
-          <SidebarWithHeader slugs={slugs}>
+          <Sidebar slugs={slugs}>
             <Component {...pageProps} />
-          </SidebarWithHeader>
+          </Sidebar>
         </ApolloProvider>
       </ChakraProvider>
     </>
