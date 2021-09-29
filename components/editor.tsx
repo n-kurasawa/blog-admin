@@ -1,3 +1,4 @@
+import { PostHeader, PostBody } from "@n-kurasawa/blog-component";
 import { Box, TabList, Tabs, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { PostForm } from "./post-form";
 import { PostType } from "../types/blog";
@@ -20,7 +21,14 @@ export const Editor: React.FC<Props> = ({ onSubmit, initialPost }) => {
             <PostForm initialPost={initialPost} onSubmit={onSubmit} />
           </Box>
         </TabPanel>
-        <TabPanel>preview</TabPanel>
+        <TabPanel>
+          <PostHeader
+            title={initialPost.title}
+            coverImage={initialPost.coverImage}
+            date={initialPost.publishedAt}
+          />
+          <PostBody content={initialPost.content.body} />
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );
