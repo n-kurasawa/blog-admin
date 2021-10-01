@@ -6,9 +6,12 @@ import {
 } from "../../lib/generated/graphql";
 import type { PostType } from "../../types/blog";
 import { Editor } from "../../components/editor";
+import { useToast } from "@chakra-ui/react";
 
 const Post: NextPage = () => {
   const router = useRouter();
+  const toast = useToast();
+
   let queryValue = "";
   if (typeof router.query.slug === "string") {
     queryValue = router.query.slug;
@@ -38,7 +41,19 @@ const Post: NextPage = () => {
       },
     });
     if (res.errors) {
-      console.error(res.errors);
+      toast({
+        title: `エラーが発生しました: ${res.errors}`,
+        position: "top-right",
+        status: "error",
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: `保存されました`,
+        position: "top-right",
+        status: "success",
+        isClosable: true,
+      });
     }
   };
 

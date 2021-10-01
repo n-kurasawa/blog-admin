@@ -3,9 +3,11 @@ import { PostType } from "../types/blog";
 import { useCreatePostMutation } from "../lib/generated/graphql";
 import { useRouter } from "next/router";
 import { Editor } from "../components/editor";
+import { useToast } from "@chakra-ui/react";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const toast = useToast();
   const initialPost: PostType = {
     id: "",
     title: "",
@@ -31,7 +33,19 @@ const Home: NextPage = () => {
       },
     });
     if (res.errors) {
-      console.error(res.errors);
+      toast({
+        title: `エラーが発生しました: ${res.errors}`,
+        position: "top-right",
+        status: "error",
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: `保存されました`,
+        position: "top-right",
+        status: "success",
+        isClosable: true,
+      });
     }
     router.push(`/posts/${post.slug}`);
   };
