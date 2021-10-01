@@ -2,6 +2,7 @@ import { PostHeader, PostBody } from "@n-kurasawa/blog-component";
 import { Box, TabList, Tabs, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { PostForm } from "./post-form";
 import { PostType } from "../types/blog";
+import { useEffect, useState } from "react";
 
 type Props = {
   initialPost: PostType;
@@ -9,6 +10,11 @@ type Props = {
 };
 
 export const Editor: React.FC<Props> = ({ onSubmit, initialPost }) => {
+  const [post, setPost] = useState(initialPost);
+  useEffect(() => {
+    setPost(initialPost);
+  }, [initialPost]);
+
   return (
     <Tabs size={"lg"}>
       <TabList>
@@ -18,7 +24,7 @@ export const Editor: React.FC<Props> = ({ onSubmit, initialPost }) => {
       <TabPanels>
         <TabPanel>
           <Box p={6}>
-            <PostForm initialPost={initialPost} onSubmit={onSubmit} />
+            <PostForm post={post} onSubmit={onSubmit} setPost={setPost} />
           </Box>
         </TabPanel>
         <TabPanel>
@@ -27,7 +33,7 @@ export const Editor: React.FC<Props> = ({ onSubmit, initialPost }) => {
             coverImage={initialPost.coverImage}
             date={initialPost.publishedAt}
           />
-          <PostBody content={initialPost.content.body} />
+          <PostBody content={post.content.body} />
         </TabPanel>
       </TabPanels>
     </Tabs>

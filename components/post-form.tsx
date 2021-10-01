@@ -1,6 +1,8 @@
 import {
   ChangeEventHandler,
+  Dispatch,
   FormEventHandler,
+  SetStateAction,
   useEffect,
   useState,
 } from "react";
@@ -15,14 +17,11 @@ import {
 import { PostType } from "../types/blog";
 
 type Props = {
-  initialPost: PostType;
+  post: PostType;
+  setPost: Dispatch<SetStateAction<PostType>>;
   onSubmit: (post: PostType) => void;
 };
-export const PostForm: React.FC<Props> = ({ initialPost, onSubmit }) => {
-  const [post, setPost] = useState(initialPost);
-  useEffect(() => {
-    setPost(initialPost);
-  }, [initialPost]);
+export const PostForm: React.FC<Props> = ({ post, onSubmit, setPost }) => {
   const { title, publishedAt, slug, content, description, coverImage } = post;
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPost((prev) => {

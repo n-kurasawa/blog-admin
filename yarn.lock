@@ -1613,10 +1613,10 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@n-kurasawa/blog-component@0.1.13":
-  version "0.1.13"
-  resolved "https://npm.pkg.github.com/download/@n-kurasawa/blog-component/0.1.13/3bfdb8836566558e8cc12fbadccb35b0237e87a78d26c268c14821adae3a0b8f#f1c91f10b967dac6e583dd7aee3721df270a994f"
-  integrity sha512-ZTOTM6Vvh6vTIeJAfkoxRrTebX3ozf29yCba+8Jd4kX51yZIiugoFaltCCIYqTUlussu5dBu+kAqSJB+Sm73xg==
+"@n-kurasawa/blog-component@1.0.3":
+  version "1.0.3"
+  resolved "https://npm.pkg.github.com/download/@n-kurasawa/blog-component/1.0.3/08e0a940e2e2e945ed23aaf8698b1c1e7c8507b24117d6ab661407bea2d9334c#72ea0a6d06c6cb0a84c2df968d4b516e61a5e36f"
+  integrity sha512-1//qNnkE+3BelASHYyjhOgnrRGhJhez6eYNHmqUJjUBCNXjW9S8BreOrpTb8KXSPNq/fP/p+y9jXD9IiAaMczA==
   dependencies:
     date-fns "^2.24.0"
     remark "^14.0.1"
