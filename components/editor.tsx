@@ -1,15 +1,16 @@
-import { PostHeader, PostBody } from "@n-kurasawa/blog-component";
 import { Box, TabList, Tabs, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
-import { PostForm } from "./post-form";
+import { PostHeader, PostBody } from "@n-kurasawa/blog-component";
+import { FC, useEffect, useState } from "react";
+
 import { PostType } from "../types/blog";
-import { useEffect, useState } from "react";
+import { PostForm } from "./post-form";
 
 type Props = {
   initialPost: PostType;
   onSubmit: (post: PostType) => void;
 };
 
-export const Editor: React.FC<Props> = ({ onSubmit, initialPost }) => {
+export const Editor: FC<Props> = ({ onSubmit, initialPost }) => {
   const [post, setPost] = useState(initialPost);
   useEffect(() => {
     setPost(initialPost);

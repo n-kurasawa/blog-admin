@@ -1,9 +1,14 @@
-import type { NextPage } from "next";
-import { PostType } from "../types/blog";
-import { useCreatePostMutation } from "../lib/generated/graphql";
-import { useRouter } from "next/router";
-import { Editor } from "../components/editor";
 import { useToast } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
+import { Editor } from "../components/editor";
+import { useCreatePostMutation } from "../lib/generated/graphql";
+import { PostType } from "../types/blog";
+
+import type { NextPage } from "next";
+
+
+
 
 const Home: NextPage = () => {
   const router = useRouter();

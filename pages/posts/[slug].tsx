@@ -1,12 +1,16 @@
-import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
+
+import { Editor } from "../../components/editor";
 import {
   usePostQuery,
   useUpdatePostMutation,
 } from "../../lib/generated/graphql";
+
 import type { PostType } from "../../types/blog";
-import { Editor } from "../../components/editor";
-import { useToast } from "@chakra-ui/react";
+
+
 
 const Post: NextPage = () => {
   const router = useRouter();

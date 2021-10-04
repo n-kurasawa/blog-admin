@@ -1,12 +1,4 @@
 import {
-  ChangeEventHandler,
-  Dispatch,
-  FormEventHandler,
-  SetStateAction,
-} from "react";
-import {
-  Alert,
-  AlertIcon,
   Button,
   FormControl,
   FormLabel,
@@ -14,6 +6,13 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import {
+  ChangeEventHandler,
+  Dispatch,
+  FormEventHandler,
+  SetStateAction,
+} from "react";
+
 import { PostType } from "../types/blog";
 
 type Props = {

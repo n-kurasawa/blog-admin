@@ -1,10 +1,12 @@
-import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
 import { ApolloProvider } from "@apollo/client";
+import { ChakraProvider } from "@chakra-ui/react";
+import Head from "next/head";
+
 import { Sidebar } from "../components/sidebar";
 import { useSlugsQuery } from "../lib/generated/graphql";
-import Head from "next/head";
 import { gqlClient } from "../lib/graphql-client";
+
+import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const slugsQuery = useSlugsQuery({ client: gqlClient });
