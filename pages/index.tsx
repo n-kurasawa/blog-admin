@@ -7,9 +7,6 @@ import { PostType } from "../types/blog";
 
 import type { NextPage } from "next";
 
-
-
-
 const Home: NextPage = () => {
   const router = useRouter();
   const toast = useToast();
