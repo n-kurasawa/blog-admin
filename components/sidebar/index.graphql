@@ -1,0 +1,3 @@
+fragment Sidebar on Post {
+  slug
+}

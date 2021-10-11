@@ -2,8 +2,9 @@ import { Box, TabList, Tabs, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { PostHeader, PostBody } from "@n-kurasawa/blog-component";
 import { FC, useEffect, useState } from "react";
 
-import { PostType } from "../types/blog";
-import { PostForm } from "./post-form";
+import { PostForm } from "./../post-form";
+
+import type { PostType } from "./../../types/blog";
 
 type Props = {
   initialPost: PostType;

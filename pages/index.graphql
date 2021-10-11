@@ -1,0 +1,21 @@
+mutation createPost(
+  $slug: String!
+  $title: String!
+  $coverImage: String!
+  $content: String!
+  $description: String!
+  $publishedAt: String!
+) {
+  createPost(
+    input: {
+      slug: $slug
+      title: $title
+      coverImage: $coverImage
+      content: $content
+      description: $description
+      publishedAt: $publishedAt
+    }
+  ) {
+    id
+  }
+}

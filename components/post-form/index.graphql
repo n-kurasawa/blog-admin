@@ -1,0 +1,11 @@
+fragment PostForm on Post {
+  id
+  content {
+    body
+  }
+  title
+  publishedAt
+  slug
+  coverImage
+  description
+}

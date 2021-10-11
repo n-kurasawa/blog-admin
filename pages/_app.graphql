@@ -1,0 +1,5 @@
+query App {
+  posts {
+    ...Sidebar
+  }
+}

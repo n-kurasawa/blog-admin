@@ -77,17 +77,16 @@ export type QueryPostArgs = {
   slug: Scalars['String'];
 };
 
-export type PostQueryVariables = Exact<{
-  slug: Scalars['String'];
-}>;
+export type EditorFragment = { __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } };
+
+export type PostFormFragment = { __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } };
+
+export type SidebarFragment = { __typename?: 'Post', slug: string };
+
+export type AppQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } }> };
-
-export type SlugsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type SlugsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', slug: string }> };
+export type AppQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', slug: string }> };
 
 export type CreatePostMutationVariables = Exact<{
   slug: Scalars['String'];
@@ -114,84 +113,78 @@ export type UpdatePostMutationVariables = Exact<{
 
 export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', id: string } };
 
+export type SlugQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
 
-export const PostDocument = gql`
-    query post($slug: String!) {
-  post(slug: $slug) {
-    id
-    content {
-      body
-    }
-    title
-    publishedAt
-    slug
-    coverImage
-    description
+
+export type SlugQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } }> };
+
+export const EditorFragmentDoc = gql`
+    fragment Editor on Post {
+  id
+  content {
+    body
   }
+  title
+  publishedAt
+  slug
+  coverImage
+  description
 }
     `;
-
-/**
- * __usePostQuery__
- *
- * To run a query within a React component, call `usePostQuery` and pass it any options that fit your needs.
- * When your component renders, `usePostQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePostQuery({
- *   variables: {
- *      slug: // value for 'slug'
- *   },
- * });
- */
-export function usePostQuery(baseOptions: Apollo.QueryHookOptions<PostQuery, PostQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<PostQuery, PostQueryVariables>(PostDocument, options);
-      }
-export function usePostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostQuery, PostQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<PostQuery, PostQueryVariables>(PostDocument, options);
-        }
-export type PostQueryHookResult = ReturnType<typeof usePostQuery>;
-export type PostLazyQueryHookResult = ReturnType<typeof usePostLazyQuery>;
-export type PostQueryResult = Apollo.QueryResult<PostQuery, PostQueryVariables>;
-export const SlugsDocument = gql`
-    query slugs {
+export const PostFormFragmentDoc = gql`
+    fragment PostForm on Post {
+  id
+  content {
+    body
+  }
+  title
+  publishedAt
+  slug
+  coverImage
+  description
+}
+    `;
+export const SidebarFragmentDoc = gql`
+    fragment Sidebar on Post {
+  slug
+}
+    `;
+export const AppDocument = gql`
+    query App {
   posts {
-    slug
+    ...Sidebar
   }
 }
-    `;
+    ${SidebarFragmentDoc}`;
 
 /**
- * __useSlugsQuery__
+ * __useAppQuery__
  *
- * To run a query within a React component, call `useSlugsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSlugsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAppQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSlugsQuery({
+ * const { data, loading, error } = useAppQuery({
  *   variables: {
  *   },
  * });
  */
-export function useSlugsQuery(baseOptions?: Apollo.QueryHookOptions<SlugsQuery, SlugsQueryVariables>) {
+export function useAppQuery(baseOptions?: Apollo.QueryHookOptions<AppQuery, AppQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SlugsQuery, SlugsQueryVariables>(SlugsDocument, options);
+        return Apollo.useQuery<AppQuery, AppQueryVariables>(AppDocument, options);
       }
-export function useSlugsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SlugsQuery, SlugsQueryVariables>) {
+export function useAppLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AppQuery, AppQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SlugsQuery, SlugsQueryVariables>(SlugsDocument, options);
+          return Apollo.useLazyQuery<AppQuery, AppQueryVariables>(AppDocument, options);
         }
-export type SlugsQueryHookResult = ReturnType<typeof useSlugsQuery>;
-export type SlugsLazyQueryHookResult = ReturnType<typeof useSlugsLazyQuery>;
-export type SlugsQueryResult = Apollo.QueryResult<SlugsQuery, SlugsQueryVariables>;
+export type AppQueryHookResult = ReturnType<typeof useAppQuery>;
+export type AppLazyQueryHookResult = ReturnType<typeof useAppLazyQuery>;
+export type AppQueryResult = Apollo.QueryResult<AppQuery, AppQueryVariables>;
 export const CreatePostDocument = gql`
     mutation createPost($slug: String!, $title: String!, $coverImage: String!, $content: String!, $description: String!, $publishedAt: String!) {
   createPost(
@@ -273,3 +266,40 @@ export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
 export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
 export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
+export const SlugDocument = gql`
+    query Slug($slug: String!) {
+  post(slug: $slug) {
+    ...Editor
+    ...PostForm
+  }
+}
+    ${EditorFragmentDoc}
+${PostFormFragmentDoc}`;
+
+/**
+ * __useSlugQuery__
+ *
+ * To run a query within a React component, call `useSlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useSlugQuery(baseOptions: Apollo.QueryHookOptions<SlugQuery, SlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SlugQuery, SlugQueryVariables>(SlugDocument, options);
+      }
+export function useSlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SlugQuery, SlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SlugQuery, SlugQueryVariables>(SlugDocument, options);
+        }
+export type SlugQueryHookResult = ReturnType<typeof useSlugQuery>;
+export type SlugLazyQueryHookResult = ReturnType<typeof useSlugLazyQuery>;
+export type SlugQueryResult = Apollo.QueryResult<SlugQuery, SlugQueryVariables>;

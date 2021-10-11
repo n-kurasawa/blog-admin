@@ -4,13 +4,11 @@ import { useRouter } from "next/router";
 
 import { Editor } from "../../components/editor";
 import {
-  usePostQuery,
+  useSlugQuery,
   useUpdatePostMutation,
 } from "../../lib/generated/graphql";
 
 import type { PostType } from "../../types/blog";
-
-
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -21,7 +19,7 @@ const Post: NextPage = () => {
     queryValue = router.query.slug;
   }
 
-  const { data, loading, error } = usePostQuery({
+  const { data, loading, error } = useSlugQuery({
     variables: { slug: queryValue },
   });
   const [updatePostMutation] = useUpdatePostMutation({
