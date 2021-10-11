@@ -8,7 +8,7 @@ import { gqlClient } from "../lib/graphql-client";
 
 import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const slugsQuery = useSlugsQuery({ client: gqlClient });
   let slugs: string[] = [];
   if (slugsQuery.data?.posts) {
