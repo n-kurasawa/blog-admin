@@ -13,7 +13,7 @@ import {
   SetStateAction,
 } from "react";
 
-import { PostType } from "../types/blog";
+import { PostType } from "../../types/blog";
 
 type Props = {
   post: PostType;
