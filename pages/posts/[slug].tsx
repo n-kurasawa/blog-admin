@@ -3,14 +3,14 @@ import { useToast } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { Editor, EditorFragmentDoc } from "../../components/editor";
+import { Editor } from "../../components/editor";
 import {
   EditorFragment,
   useSlugQuery,
   useUpdatePostMutation,
 } from "../../lib/generated/graphql";
 
-export const PostQuery = gql`
+gql`
   mutation updatePost(
     $id: ID!
     $slug: String!
@@ -35,7 +35,6 @@ export const PostQuery = gql`
     }
   }
 
-  ${EditorFragmentDoc}
   query Slug($slug: String!) {
     post(slug: $slug) {
       ...Editor

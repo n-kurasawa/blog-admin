@@ -10,7 +10,7 @@ import {
 
 import type { NextPage } from "next";
 
-export const createPost = gql`
+gql`
   mutation createPost(
     $slug: String!
     $title: String!

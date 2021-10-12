@@ -2,14 +2,13 @@ import { ApolloProvider, gql } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
 
-import { Sidebar, SidebarFragmentDoc } from "../components/sidebar";
+import { Sidebar } from "../components/sidebar";
 import { useAppQuery } from "../lib/generated/graphql";
 import { gqlClient } from "../lib/graphql-client";
 
 import type { AppProps } from "next/app";
 
-export const AppQuery = gql`
-  ${SidebarFragmentDoc}
+gql`
   query App {
     ...Sidebar
   }

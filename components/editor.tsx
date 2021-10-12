@@ -4,15 +4,14 @@ import { PostHeader, PostBody } from "@n-kurasawa/blog-component";
 import { FC, useEffect, useState } from "react";
 
 import { EditorFragment } from "../lib/generated/graphql";
-import { PostForm, PostFormFragmentDoc } from "./post-form";
+import { PostForm } from "./post-form";
 
 type Props = {
   initialPost: EditorFragment;
   onSubmit: (post: EditorFragment) => void;
 };
 
-export const EditorFragmentDoc = gql`
-  ${PostFormFragmentDoc}
+gql`
   fragment Editor on Post {
     id
     content {

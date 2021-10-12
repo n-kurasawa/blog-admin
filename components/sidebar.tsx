@@ -4,7 +4,7 @@ import NextLink from "next/link";
 
 import { SidebarFragment } from "../lib/generated/graphql";
 
-export const SidebarFragmentDoc = gql`
+gql`
   fragment Sidebar on Query {
     posts {
       slug
@@ -13,7 +13,7 @@ export const SidebarFragmentDoc = gql`
 `;
 
 type Props = {
-  slugs: SidebarFragment ;
+  slugs: SidebarFragment;
 };
 export const Sidebar: React.FC<Props> = ({ slugs, children }) => {
   return (

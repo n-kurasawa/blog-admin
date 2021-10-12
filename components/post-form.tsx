@@ -16,7 +16,7 @@ import {
 
 import { PostFormFragment } from "../lib/generated/graphql";
 
-export const PostFormFragmentDoc = gql`
+gql`
   fragment PostForm on Post {
     id
     content {
