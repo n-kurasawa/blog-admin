@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import {
   Button,
   FormControl,
@@ -13,7 +14,21 @@ import {
   SetStateAction,
 } from "react";
 
-import { PostType } from "../../types/blog";
+import { PostType } from "../types/blog";
+
+export const PostFormFragment = gql`
+  fragment PostForm on Post {
+    id
+    content {
+      body
+    }
+    title
+    publishedAt
+    slug
+    coverImage
+    description
+  }
+`;
 
 type Props = {
   post: PostType;

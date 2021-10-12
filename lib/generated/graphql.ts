@@ -120,19 +120,6 @@ export type SlugQueryVariables = Exact<{
 
 export type SlugQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } }> };
 
-export const EditorFragmentDoc = gql`
-    fragment Editor on Post {
-  id
-  content {
-    body
-  }
-  title
-  publishedAt
-  slug
-  coverImage
-  description
-}
-    `;
 export const PostFormFragmentDoc = gql`
     fragment PostForm on Post {
   id
@@ -146,6 +133,20 @@ export const PostFormFragmentDoc = gql`
   description
 }
     `;
+export const EditorFragmentDoc = gql`
+    fragment Editor on Post {
+  id
+  content {
+    body
+  }
+  title
+  publishedAt
+  slug
+  coverImage
+  description
+  ...PostForm
+}
+    ${PostFormFragmentDoc}`;
 export const SidebarFragmentDoc = gql`
     fragment Sidebar on Post {
   slug
@@ -270,11 +271,9 @@ export const SlugDocument = gql`
     query Slug($slug: String!) {
   post(slug: $slug) {
     ...Editor
-    ...PostForm
   }
 }
-    ${EditorFragmentDoc}
-${PostFormFragmentDoc}`;
+    ${EditorFragmentDoc}`;
 
 /**
  * __useSlugQuery__

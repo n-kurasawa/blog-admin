@@ -1,5 +1,12 @@
+import { gql } from "@apollo/client";
 import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+
+export const SidebarFragment = gql`
+  fragment Sidebar on Post {
+    slug
+  }
+`;
 
 type Props = {
   slugs: string[];

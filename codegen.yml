@@ -1,6 +1,6 @@
 overwrite: true
 schema: "http://192.168.0.110/api/query"
-documents: "./**/*.graphql"
+documents: "./**/*.tsx"
 generates:
   lib/generated/graphql.ts:
     plugins:

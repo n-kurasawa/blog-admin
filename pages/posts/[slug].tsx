@@ -1,14 +1,48 @@
+import { gql } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { Editor } from "../../../components/editor";
+import { Editor, EditorFragment } from "../../components/editor";
 import {
   useSlugQuery,
   useUpdatePostMutation,
-} from "../../../lib/generated/graphql";
+} from "../../lib/generated/graphql";
 
-import type { PostType } from "../../../types/blog";
+import type { PostType } from "../../types/blog";
+
+export const PostQuery = gql`
+  mutation updatePost(
+    $id: ID!
+    $slug: String!
+    $title: String!
+    $coverImage: String!
+    $content: String!
+    $description: String!
+    $publishedAt: String!
+  ) {
+    updatePost(
+      input: {
+        id: $id
+        slug: $slug
+        title: $title
+        coverImage: $coverImage
+        content: $content
+        description: $description
+        publishedAt: $publishedAt
+      }
+    ) {
+      id
+    }
+  }
+
+  ${EditorFragment}
+  query Slug($slug: String!) {
+    post(slug: $slug) {
+      ...Editor
+    }
+  }
+`;
 
 const Post: NextPage = () => {
   const router = useRouter();

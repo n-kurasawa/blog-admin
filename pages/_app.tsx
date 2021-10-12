@@ -1,12 +1,21 @@
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, gql } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
 
-import { Sidebar } from "../components/sidebar";
+import { Sidebar, SidebarFragment } from "../components/sidebar";
 import { useAppQuery } from "../lib/generated/graphql";
 import { gqlClient } from "../lib/graphql-client";
 
 import type { AppProps } from "next/app";
+
+export const AppQuery = gql`
+  query App {
+    ${SidebarFragment}
+    posts {
+      ...Sidebar
+    }
+  }
+`;
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const slugsQuery = useAppQuery({ client: gqlClient });

@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -6,6 +7,30 @@ import { useCreatePostMutation } from "../lib/generated/graphql";
 import { PostType } from "../types/blog";
 
 import type { NextPage } from "next";
+
+export const createPost = gql`
+  mutation createPost(
+    $slug: String!
+    $title: String!
+    $coverImage: String!
+    $content: String!
+    $description: String!
+    $publishedAt: String!
+  ) {
+    createPost(
+      input: {
+        slug: $slug
+        title: $title
+        coverImage: $coverImage
+        content: $content
+        description: $description
+        publishedAt: $publishedAt
+      }
+    ) {
+      id
+    }
+  }
+`;
 
 const Home: NextPage = () => {
   const router = useRouter();
