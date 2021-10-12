@@ -81,7 +81,7 @@ export type EditorFragment = { __typename?: 'Post', id: string, title: string, p
 
 export type PostFormFragment = { __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } };
 
-export type SidebarFragment = { __typename?: 'Post', slug: string };
+export type SidebarFragment = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', slug: string }> };
 
 export type AppQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -148,15 +148,15 @@ export const EditorFragmentDoc = gql`
 }
     ${PostFormFragmentDoc}`;
 export const SidebarFragmentDoc = gql`
-    fragment Sidebar on Post {
-  slug
+    fragment Sidebar on Query {
+  posts {
+    slug
+  }
 }
     `;
 export const AppDocument = gql`
     query App {
-  posts {
-    ...Sidebar
-  }
+  ...Sidebar
 }
     ${SidebarFragmentDoc}`;
 

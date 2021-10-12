@@ -2,29 +2,21 @@ import { ApolloProvider, gql } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
 
-import { Sidebar, SidebarFragment } from "../components/sidebar";
+import { Sidebar, SidebarFragmentDoc } from "../components/sidebar";
 import { useAppQuery } from "../lib/generated/graphql";
 import { gqlClient } from "../lib/graphql-client";
 
 import type { AppProps } from "next/app";
 
 export const AppQuery = gql`
+  ${SidebarFragmentDoc}
   query App {
-    ${SidebarFragment}
-    posts {
-      ...Sidebar
-    }
+    ...Sidebar
   }
 `;
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const slugsQuery = useAppQuery({ client: gqlClient });
-  let slugs: string[] = [];
-  if (slugsQuery.data?.posts) {
-    slugs = slugsQuery.data?.posts.map((post) => {
-      return post.slug;
-    });
-  }
 
   return (
     <>
@@ -33,9 +25,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       </Head>
       <ChakraProvider>
         <ApolloProvider client={gqlClient}>
-          <Sidebar slugs={slugs}>
-            <Component {...pageProps} />
-          </Sidebar>
+          {slugsQuery.data ? (
+            <Sidebar slugs={slugsQuery.data}>
+              <Component {...pageProps} />
+            </Sidebar>
+          ) : null}
         </ApolloProvider>
       </ChakraProvider>
     </>

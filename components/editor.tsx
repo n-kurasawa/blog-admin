@@ -3,17 +3,16 @@ import { Box, TabList, Tabs, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { PostHeader, PostBody } from "@n-kurasawa/blog-component";
 import { FC, useEffect, useState } from "react";
 
-import { PostForm, PostFormFragment } from "./post-form";
-
-import type { PostType } from "../types/blog";
+import { EditorFragment } from "../lib/generated/graphql";
+import { PostForm, PostFormFragmentDoc } from "./post-form";
 
 type Props = {
-  initialPost: PostType;
-  onSubmit: (post: PostType) => void;
+  initialPost: EditorFragment;
+  onSubmit: (post: EditorFragment) => void;
 };
 
-export const EditorFragment = gql`
-  ${PostFormFragment}
+export const EditorFragmentDoc = gql`
+  ${PostFormFragmentDoc}
   fragment Editor on Post {
     id
     content {

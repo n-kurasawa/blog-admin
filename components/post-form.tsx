@@ -14,9 +14,9 @@ import {
   SetStateAction,
 } from "react";
 
-import { PostType } from "../types/blog";
+import { PostFormFragment } from "../lib/generated/graphql";
 
-export const PostFormFragment = gql`
+export const PostFormFragmentDoc = gql`
   fragment PostForm on Post {
     id
     content {
@@ -31,9 +31,9 @@ export const PostFormFragment = gql`
 `;
 
 type Props = {
-  post: PostType;
-  setPost: Dispatch<SetStateAction<PostType>>;
-  onSubmit: (post: PostType) => void;
+  post: PostFormFragment;
+  setPost: Dispatch<SetStateAction<PostFormFragment>>;
+  onSubmit: (post: PostFormFragment) => void;
 };
 export const PostForm: React.FC<Props> = ({ post, onSubmit, setPost }) => {
   const { title, publishedAt, slug, content, description, coverImage } = post;

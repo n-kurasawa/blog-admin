@@ -2,14 +2,18 @@ import { gql } from "@apollo/client";
 import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-export const SidebarFragment = gql`
-  fragment Sidebar on Post {
-    slug
+import { SidebarFragment } from "../lib/generated/graphql";
+
+export const SidebarFragmentDoc = gql`
+  fragment Sidebar on Query {
+    posts {
+      slug
+    }
   }
 `;
 
 type Props = {
-  slugs: string[];
+  slugs: SidebarFragment ;
 };
 export const Sidebar: React.FC<Props> = ({ slugs, children }) => {
   return (
@@ -39,8 +43,8 @@ const SidebarContent: React.FC<Props> = ({ slugs }) => {
           </NextLink>
         </Link>
       </Flex>
-      {slugs.map((slug) => (
-        <NavItem key={slug} slug={slug} />
+      {slugs.posts.map((post) => (
+        <NavItem key={post.slug} slug={post.slug} />
       ))}
     </Box>
   );
