@@ -3,8 +3,10 @@ import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 import { Editor } from "../components/editor";
-import { useCreatePostMutation } from "../lib/generated/graphql";
-import { PostType } from "../types/blog";
+import {
+  EditorFragment,
+  useCreatePostMutation,
+} from "../lib/generated/graphql";
 
 import type { NextPage } from "next";
 
@@ -35,7 +37,7 @@ export const createPost = gql`
 const Home: NextPage = () => {
   const router = useRouter();
   const toast = useToast();
-  const initialPost: PostType = {
+  const initialPost: EditorFragment = {
     id: "",
     title: "",
     publishedAt: "",
@@ -48,7 +50,7 @@ const Home: NextPage = () => {
   const [createPostMutation] = useCreatePostMutation({
     refetchQueries: ["slugs"],
   });
-  const handleSubmit = async (post: PostType) => {
+  const handleSubmit = async (post: EditorFragment) => {
     const res = await createPostMutation({
       variables: {
         title: post.title,
