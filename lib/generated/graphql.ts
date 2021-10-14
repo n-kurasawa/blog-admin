@@ -77,7 +77,7 @@ export type QueryPostArgs = {
   slug: Scalars['String'];
 };
 
-export type EditorFragment = { __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } };
+export type EditorFragment = { __typename?: 'Post', title: string, coverImage: string, publishedAt: string, id: string, slug: string, description: string, content: { __typename?: 'Content', body: string } };
 
 export type PostFormFragment = { __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } };
 
@@ -118,7 +118,7 @@ export type SlugQueryVariables = Exact<{
 }>;
 
 
-export type SlugQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: string, title: string, publishedAt: string, slug: string, coverImage: string, description: string, content: { __typename?: 'Content', body: string } }> };
+export type SlugQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', title: string, coverImage: string, publishedAt: string, id: string, slug: string, description: string, content: { __typename?: 'Content', body: string } }> };
 
 export const PostFormFragmentDoc = gql`
     fragment PostForm on Post {
@@ -135,15 +135,12 @@ export const PostFormFragmentDoc = gql`
     `;
 export const EditorFragmentDoc = gql`
     fragment Editor on Post {
-  id
   content {
     body
   }
   title
-  publishedAt
-  slug
   coverImage
-  description
+  publishedAt
   ...PostForm
 }
     ${PostFormFragmentDoc}`;

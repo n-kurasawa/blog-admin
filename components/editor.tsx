@@ -13,15 +13,12 @@ type Props = {
 
 gql`
   fragment Editor on Post {
-    id
     content {
       body
     }
     title
-    publishedAt
-    slug
     coverImage
-    description
+    publishedAt
     ...PostForm
   }
 `;
