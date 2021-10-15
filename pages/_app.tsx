@@ -1,9 +1,10 @@
 import { ApolloProvider, gql } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
+import { filter } from "graphql-anywhere";
 import Head from "next/head";
 
 import { Sidebar } from "../components/sidebar";
-import { useAppQuery } from "../lib/generated/graphql";
+import { SidebarFragmentDoc, useAppQuery } from "../lib/generated/graphql";
 import { gqlClient } from "../lib/graphql-client";
 
 import type { AppProps } from "next/app";
@@ -25,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       <ChakraProvider>
         <ApolloProvider client={gqlClient}>
           {slugsQuery.data ? (
-            <Sidebar slugs={slugsQuery.data}>
+            <Sidebar slugs={filter(SidebarFragmentDoc, slugsQuery.data)}>
               <Component {...pageProps} />
             </Sidebar>
           ) : null}

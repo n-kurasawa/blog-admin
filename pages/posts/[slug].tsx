@@ -1,11 +1,13 @@
 import { gql } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
+import { filter } from "graphql-anywhere";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import { Editor } from "../../components/editor";
 import {
   EditorFragment,
+  EditorFragmentDoc,
   useSlugQuery,
   useUpdatePostMutation,
 } from "../../lib/generated/graphql";
@@ -55,7 +57,7 @@ const Post: NextPage = () => {
     variables: { slug: queryValue },
   });
   const [updatePostMutation] = useUpdatePostMutation({
-    refetchQueries: ["slugs"],
+    refetchQueries: ["App", "Slug"],
   });
 
   if (loading || error || !data?.post) {
@@ -90,8 +92,11 @@ const Post: NextPage = () => {
       });
     }
   };
-
-  return <Editor initialPost={data.post} onSubmit={handleSubmit} />;
+  return (
+    <Editor
+      initialPost={filter(EditorFragmentDoc, data.post)}
+      onSubmit={handleSubmit}
+    />
+  );
 };
-
 export default Post;
